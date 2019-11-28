@@ -36,10 +36,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private Button mBtnPrintCallback;
 
-//    private PsoPrinterConnection mPsoPrinterConnection = new PsoPrinterConnection();
-
     private PsoPrinterManager mPsoPrinterManager;
-
 
     /**
      * 自定义的远程回调接口
@@ -92,16 +89,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
 
         switch (v.getId()) {
-//            case R.id.btn_bindService: {
-//                Intent service = new Intent("com.lll.posserviceaidl.PosPrinterService");
-//                service.setPackage("com.lll.posserviceaidl");//服务端的包名
-//                bindService(service, mPsoPrinterConnection, BIND_AUTO_CREATE);
-//                break;
-//            }
-//            case R.id.btn_unbindService: {
-//                unbindService(mPsoPrinterConnection);
-//                break;
-//            }
             case R.id.btn_obtainData: {
                 if (mPsoPrinterManager != null) {
                     try {
@@ -143,25 +130,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         }
 
-    }
-
-    /**
-     * 链接Connection
-     */
-    private class PsoPrinterConnection implements ServiceConnection {
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            Log.e(TAG, "onServiceConnected: " + name.getPackageName());
-            mPsoPrinterManager = PsoPrinterManager.Stub.asInterface(service);
-            Toast.makeText(MainActivity.this, "服务链接成功", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            Log.e(TAG, "onServiceDisconnected: " + name.getPackageName());
-            Toast.makeText(MainActivity.this, "服务解绑成功", Toast.LENGTH_SHORT).show();
-        }
     }
 
 }
