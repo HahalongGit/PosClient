@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btn_bindService"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:text="绑定服务" />
+
+    <Button
+        android:id="@+id/btn_unbindService"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="断开服务链接" />
+
+    <Button
+        android:id="@+id/btn_obtainData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="获取服务端参数：" />
+
+    <Button
+        android:id="@+id/btn_pushPosInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="传递POS信息" />
+
+    <Button
+        android:id="@+id/btn_printCallback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="回调信息打印" />
+
+    <TextView
+        android:id="@+id/tv_obtainData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:text="获取的服务数据："
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp" />
+
+</LinearLayout>
