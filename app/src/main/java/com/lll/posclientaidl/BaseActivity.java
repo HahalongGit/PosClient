@@ -3,17 +3,14 @@ package com.lll.posclientaidl;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.lll.posserviceaidl.AidlDeviceManager;
-import com.lll.posserviceaidl.IPosQuickScanManager;
-import com.lll.posserviceaidl.PsoPrinterManager;
-import com.lll.posserviceaidl.constant.Constant;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -45,12 +42,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (this.getClass().getName().equals(MainActivity.class.getName())) {
-            // 绑定Service
-            Intent service = new Intent("com.lll.posserviceaidl.PosPrinterService");
-            service.setPackage("com.lll.posserviceaidl");//服务端的包名
-            bindService(service, mPsoPrinterConnection, BIND_AUTO_CREATE);
-        }
+        bindService();
+
+    }
+
+    private void bindService() {
+        // 绑定Service
+        Intent service = new Intent("com.lll.posserviceaidl.PosPrinterService");
+        service.setPackage("com.lll.posserviceaidl");//服务端的包名
+        bindService(service, mPsoPrinterConnection, BIND_AUTO_CREATE);
     }
 
     /**

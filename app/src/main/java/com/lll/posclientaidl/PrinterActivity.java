@@ -1,7 +1,5 @@
 package com.lll.posclientaidl;
 
-import android.content.ComponentName;
-import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -20,9 +18,9 @@ import com.lll.posserviceaidl.constant.Constant;
 
 import java.util.ArrayList;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class PrinterActivity extends BaseActivity implements View.OnClickListener {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "PrinterActivity";
 
     private TextView mTextView;
 
@@ -46,7 +44,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         public void onPrintSuccess(int code, String message) throws RemoteException {
             Log.e(TAG, "onPrintSuccess: " + Thread.currentThread().getName());// main
             Log.e(TAG, "onPrintSuccess-message: " + message);
-            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+            Toast.makeText(PrinterActivity.this, message, Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -59,7 +57,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_printer);
         mTextView = findViewById(R.id.tv_obtainData);
         mButton = findViewById(R.id.btn_bindService);
         mBtnObtainData = findViewById(R.id.btn_obtainData);
@@ -82,7 +80,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        Toast.makeText(MainActivity.this, "服务链接成功", Toast.LENGTH_SHORT).show();
+        Toast.makeText(PrinterActivity.this, "服务链接成功", Toast.LENGTH_SHORT).show();
     }
 
     @Override

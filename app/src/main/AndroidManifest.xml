@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.lll.posclientaidl">
 
     <application
@@ -9,16 +10,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BaseActivity">
-        </activity>
-        <!-- 采用隐式意图启动Service？ -->
+
+        <activity android:name=".QuickScanQrActivity" />
+        <activity android:name=".PrinterActivity" />
+
         <service android:name=".service.PosPrinterService">
             <intent-filter>
                 <action android:name="com.lll.posclientaidl.PosPrinterService" />
             </intent-filter>
         </service>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".GuideActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
