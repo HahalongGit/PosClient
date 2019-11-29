@@ -11,8 +11,17 @@ import android.os.Parcelable;
  */
 public class DecodeResult implements Parcelable {
 
+    /**
+     * 解码结果，大于0时成功
+     */
     private int ret = -1;
+    /**
+     * 码制，预留
+     */
     private int decodeFormat = -1;
+    /**
+     * 解码结果
+     */
     private byte[] decodeData;
 
     public int getRet() {

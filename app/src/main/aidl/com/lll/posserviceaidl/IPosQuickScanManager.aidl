@@ -1,10 +1,18 @@
 // IPosQuickScanManager.aidl
 package com.lll.posserviceaidl;
 import com.lll.posserviceaidl.bean.DecodeResult;
+import com.lll.posserviceaidl.bean.CameraBeanZbar;
+import com.lll.posserviceaidl.AidlScanCallback;
 
 // Declare any non-default types here with import statements
 
 interface IPosQuickScanManager {
+
+   /** 快速扫码初始化
+    * @deprecated
+    */
+   int init(String packageName);
+
     /**
      *
      * 取消扫描
@@ -24,6 +32,13 @@ interface IPosQuickScanManager {
      * 取消扫描
      */
     DecodeResult decodeBarCode(int width,int height,in byte[] data);
+
+     /**
+      *@param cameraBeanZbar
+      *@param cb 扫码回调
+      * 开始扫码
+      */
+    void scanQrCode(in CameraBeanZbar cameraBeanZbar,AidlScanCallback cb);
 
 
 }
