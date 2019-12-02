@@ -91,6 +91,10 @@ public class PrinterActivity extends BaseActivity implements View.OnClickListene
                 if (mPsoPrinterManager != null) {
                     try {
                         String posInfo = mPsoPrinterManager.queryPosInfo("20191127");
+
+//                        doPrinter(String strPrintEntity, OnResultListener listener);//strPrintEntity 打印内存的json数据
+//                        mPsoPrinterManager.printData(); //打印
+
                         mTextView.setText("服务端参数：" + posInfo);
                     } catch (RemoteException e) {
                         e.printStackTrace();

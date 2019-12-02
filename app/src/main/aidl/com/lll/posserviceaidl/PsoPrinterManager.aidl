@@ -3,6 +3,7 @@ package com.lll.posserviceaidl;
 import com.lll.posserviceaidl.bean.PosInfo;
 import com.lll.posserviceaidl.bean.PrinterParams;
 import com.lll.posserviceaidl.PosPrinterCallback;
+import com.lll.posserviceaidl.OnPrintResultListener;
 // Declare any non-default types here with import statements
 
 interface PsoPrinterManager {
@@ -19,7 +20,7 @@ interface PsoPrinterManager {
     void setPostInfo(in PosInfo posInfo);
 
     // 打印数据
-    int printData(in List<PrinterParams> list);
+    int printData(in List<PrinterParams> list,OnPrintResultListener listener);
 
     /**
      * 打印其他

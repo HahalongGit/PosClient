@@ -88,6 +88,7 @@ public class QuickScanQrActivity extends BaseActivity implements CompoundButton.
             case R.id.btn_scannQrCode: {
                 if (mIPosQuickScanManager != null) {
                     try {
+
 //                        mIPosQuickScanManager.decodeBarCode(680, 420, new byte[1024]);
                         CameraBeanZbar cameraBeanZbar = new CameraBeanZbar();
                         cameraBeanZbar.setCameraId(cameraId);
@@ -115,6 +116,7 @@ public class QuickScanQrActivity extends BaseActivity implements CompoundButton.
     public void onConnected(AidlDeviceManager deviceManager) {
         try {
             IBinder device = deviceManager.getDevice(Constant.DEVICE_TYPE.DEVICE_TYPE_QUICKSCAN);
+            // getScanner();//获取扫码设备远程对象
             mIPosQuickScanManager = IPosQuickScanManager.Stub.asInterface(device);
         } catch (RemoteException e) {
             e.printStackTrace();

@@ -6,6 +6,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.lll.posserviceaidl.OnPrintResultListener;
 import com.lll.posserviceaidl.PosPrinterCallback;
 import com.lll.posserviceaidl.PsoPrinterManager;
 import com.lll.posserviceaidl.bean.PosInfo;
@@ -35,8 +36,6 @@ public class PosPrinterService extends Service {
         return mPosPrinterBinder;
     }
 
-
-
     /**
      * pos 打印实现
      */
@@ -58,7 +57,8 @@ public class PosPrinterService extends Service {
         }
 
         @Override
-        public int printData(List<PrinterParams> list) throws RemoteException {
+        public int printData(List<PrinterParams> list, OnPrintResultListener listener) throws RemoteException {
+
             return 0;
         }
 
