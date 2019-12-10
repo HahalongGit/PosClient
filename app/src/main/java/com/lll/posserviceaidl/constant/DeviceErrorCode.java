@@ -7,6 +7,7 @@ package com.lll.posserviceaidl.constant;
  * @date 2019/11/28
  */
 public interface DeviceErrorCode {
+
     public interface PBOC_CHECKCARD {
         int INVALID_PARAMETER = 1;
         int ERROR_OTHER = 7;

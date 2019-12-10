@@ -3,7 +3,7 @@ package com.lll.posserviceaidl;
 import com.lll.posserviceaidl.bean.DecodeResult;
 import com.lll.posserviceaidl.bean.CameraBeanZbar;
 import com.lll.posserviceaidl.AidlScanCallback;
-
+import android.os.Bundle;
 // Declare any non-default types here with import statements
 
 interface IPosQuickScanManager {
@@ -39,6 +39,20 @@ interface IPosQuickScanManager {
       * 开始扫码
       */
     void scanQrCode(in CameraBeanZbar cameraBeanZbar,AidlScanCallback cb);
+    /**
+    * @param bundle 参数
+    * @param cb 回调
+    * */
+//    void scanQrCode(in Bundle bundle,AidlScanCallback cb);
 
+   /**
+    * 是否需要自定义界面
+    * */
+    void setNeedCaptureView(boolean needCaptureView);
+
+    /**
+    * 设置界面布局CaptureView
+    * */
+    void setCaptureView(in byte[]view); //不能传递View
 
 }

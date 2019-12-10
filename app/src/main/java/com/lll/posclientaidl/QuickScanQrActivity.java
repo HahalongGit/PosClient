@@ -1,9 +1,14 @@
 package com.lll.posclientaidl;
 
+import android.content.res.AssetManager;
+import android.graphics.Canvas;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,6 +20,10 @@ import com.lll.posserviceaidl.IPosQuickScanManager;
 import com.lll.posserviceaidl.bean.CameraBeanZbar;
 import com.lll.posserviceaidl.constant.Constant;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +44,8 @@ public class QuickScanQrActivity extends BaseActivity implements CompoundButton.
     CheckBox mCheckboxCameraDirecation;
     @BindView(R.id.btn_scannQrCode)
     Button mBtnScannQrCode;
+    @BindView(R.id.surfaceView)
+    SurfaceView mSurfaceView;
 
     /**
      * 摄像头id，前置还是后置1
@@ -80,6 +91,46 @@ public class QuickScanQrActivity extends BaseActivity implements CompoundButton.
         ButterKnife.bind(this);
         mCheckboxCameraDirecation.setOnCheckedChangeListener(this);
         mCheckboxFlashlight.setOnCheckedChangeListener(this);
+
+        SurfaceHolder holder = mSurfaceView.getHolder();
+        holder.addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder holder) {
+
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+//                Canvas canvas = holder.lockCanvas();
+//                canvas.drawPath(new Path(), null);
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder holder) {
+
+            }
+        });
+        holder.addCallback(new SurfaceHolder.Callback2() {
+            @Override
+            public void surfaceRedrawNeeded(SurfaceHolder holder) {
+
+            }
+
+            @Override
+            public void surfaceCreated(SurfaceHolder holder) {
+
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder holder) {
+
+            }
+        });
     }
 
     @OnClick({R.id.btn_scannQrCode})
@@ -98,10 +149,35 @@ public class QuickScanQrActivity extends BaseActivity implements CompoundButton.
                         cameraBeanZbar.setLightMode(lightMode);
                         cameraBeanZbar.setTime(Integer.MAX_VALUE);
                         cameraBeanZbar.setSpinDegree(spinDegree);
-                        HashMap<String, Object> enternalMap = new HashMap<>();
-                        enternalMap.put("ShowPreview", true);//是否显示扫码页面
-                        enternalMap.put("ScanEffect", cameraDisplayEffect == 1);
-                        cameraBeanZbar.setExternalMap(enternalMap);
+                        cameraBeanZbar.setShowPreview(true);
+                        cameraBeanZbar.setPersist(false);
+                        cameraBeanZbar.setScanEffect(true);
+//                        HashMap<String, Object> enternalMap = new HashMap<>();
+//                        enternalMap.put("ShowPreview", true);//是否显示扫码页面
+//                        enternalMap.put("ScanEffect", cameraDisplayEffect == 1);
+//                        cameraBeanZbar.setExternalMap(enternalMap);
+                        mIPosQuickScanManager.setNeedCaptureView(true);
+                        AssetManager assets = getAssets();
+                        byte[] data = new byte[1024];
+                        StringBuilder sb = new StringBuilder();
+                        try {
+                            InputStream inputStream = assets.open("camera_layout.xml");
+                            int num = 0;
+                            int len = 0;
+                            while ((len = inputStream.read(data)) != -1) {
+                                num++;
+                                Log.e(TAG, "inputStream---" + num);
+                                String s = new String(data, 0, len);
+                                sb.append(s);
+                            }
+                            inputStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        mIPosQuickScanManager.setCaptureView(sb.toString().getBytes());
+//                        Bundle bundle = new Bundle();
+//                        bundle.putParcelable(CameraBeanZbar.CAMERA_PARAM_FALG, cameraBeanZbar);
                         mIPosQuickScanManager.scanQrCode(cameraBeanZbar, mAidlScanCallback);
                     } catch (RemoteException e) {
                         e.printStackTrace();

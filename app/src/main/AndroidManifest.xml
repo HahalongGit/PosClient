@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.lll.posclientaidl">
 
+    <!--服务端定义的pos权限-->
+    <!--<uses-permission android:name="com.lll.posserviceaidl.permission.SMART_POS" />-->
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

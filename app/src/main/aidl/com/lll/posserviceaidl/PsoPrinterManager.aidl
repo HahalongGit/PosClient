@@ -28,4 +28,9 @@ interface PsoPrinterManager {
      */
     void printOther(in List<PrinterParams> list,PosPrinterCallback bc);
 
+    /**
+     *设置系统
+     **/
+    void setSystemFunction(in Bundle bundle);
+
 }

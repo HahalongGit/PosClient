@@ -34,6 +34,8 @@ public class PrinterActivity extends BaseActivity implements View.OnClickListene
 
     private Button mBtnPrintCallback;
 
+    private Button mBtnPrintSetting;
+
     private PsoPrinterManager mPsoPrinterManager;
 
     /**
@@ -64,11 +66,14 @@ public class PrinterActivity extends BaseActivity implements View.OnClickListene
         mBtnUnbindService = findViewById(R.id.btn_unbindService);
         mBtnPushPosInfo = findViewById(R.id.btn_pushPosInfo);
         mBtnPrintCallback = findViewById(R.id.btn_printCallback);
+        mBtnPrintSetting = findViewById(R.id.btn_printSetting);
+
         mButton.setOnClickListener(this);
         mBtnObtainData.setOnClickListener(this);
         mBtnUnbindService.setOnClickListener(this);
         mBtnPushPosInfo.setOnClickListener(this);
         mBtnPrintCallback.setOnClickListener(this);
+        mBtnPrintSetting.setOnClickListener(this);
 
     }
 
@@ -127,6 +132,17 @@ public class PrinterActivity extends BaseActivity implements View.OnClickListene
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
+                }
+                break;
+            }
+            case R.id.btn_printSetting: {
+                Bundle bundle = new Bundle();
+                bundle.putString("HOMEKEY", "设置系统的显示，客户端设置~~");
+                bundle.putBoolean("STATUSBARKEY",true);
+                try {
+                    mPsoPrinterManager.setSystemFunction(bundle);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
                 }
                 break;
             }

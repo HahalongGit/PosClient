@@ -2,6 +2,7 @@ package com.lll.posclientaidl.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
@@ -64,6 +65,11 @@ public class PosPrinterService extends Service {
 
         @Override
         public void printOther(List<PrinterParams> list, PosPrinterCallback bc) throws RemoteException {
+
+        }
+
+        @Override
+        public void setSystemFunction(Bundle bundle) throws RemoteException {
 
         }
     }

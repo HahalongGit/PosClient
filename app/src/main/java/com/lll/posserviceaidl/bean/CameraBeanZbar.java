@@ -6,12 +6,32 @@ import android.os.Parcelable;
 import java.util.HashMap;
 
 /**
- * TODO:describe what the class or interface does.
+ * 扫码参数
  *
  * @author runningDigua
  * @date 2019/11/29
  */
 public class CameraBeanZbar implements Parcelable {
+
+    /**
+     * 扫码参数Flag
+     */
+    public static final String CAMERA_PARAM_FALG = "scannerParamFlag";
+
+    /**
+     * 是否显示扫码预览界面
+     */
+    private boolean isShowPreview;
+
+    /**
+     * 是否连续扫码
+     */
+    private boolean isPersist;
+
+    /**
+     * true：打开，false关闭
+     */
+    private boolean isScanEffect;
 
     /**
      * 是否使用后置摄像头（0后置，1前置）
@@ -21,6 +41,9 @@ public class CameraBeanZbar implements Parcelable {
      * 分辨率宽高（1280*720 或者 640*480）
      */
     private int width;
+    /**
+     * 分辨率高
+     */
     private int height;
     /**
      * 闪光灯模式 0关闭，1打开
@@ -40,11 +63,32 @@ public class CameraBeanZbar implements Parcelable {
     private int beep;
     /**
      * 扩展参数集，可以设置的key-value
-     * Persist:是否连续扫码，true连续扫码，false不连续
-     * ShowPreview :是否显示扫码界面，true显示，false不显示
-     * ScanEffect：扫码效果
      */
     private HashMap<String, Object> externalMap = new HashMap();
+
+    public boolean isShowPreview() {
+        return isShowPreview;
+    }
+
+    public void setShowPreview(boolean showPreview) {
+        isShowPreview = showPreview;
+    }
+
+    public boolean isPersist() {
+        return isPersist;
+    }
+
+    public void setPersist(boolean persist) {
+        isPersist = persist;
+    }
+
+    public boolean isScanEffect() {
+        return isScanEffect;
+    }
+
+    public void setScanEffect(boolean scanEffect) {
+        isScanEffect = scanEffect;
+    }
 
     public int getCameraId() {
         return cameraId;

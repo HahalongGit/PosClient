@@ -21,7 +21,7 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
         mBtnPrinter = findViewById(R.id.btn_printer);
         mBtnPrinter.setOnClickListener(this);
         mBtnScannQrCode.setOnClickListener(this);
-
+        Bundle bundle;
     }
 
     @Override
