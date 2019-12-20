@@ -86,4 +86,68 @@ ScanView类和BarCoderView实现相机处理的逻辑，拿扫相机预览数据
         mScanBoxView.setScanBoxClickListener(this);
         reader = BarcodeReader.getInstance(); // 解码相关
     }
-```
+``` 
+### czxing 库中的一些处理
+<br/>
+czxing 库中采用openCV库对图片进行了初步的预处理，根据光线的明暗判断是否要打开闪关灯的开关，绘制闪关灯，在调用
+
+``` java 
+  // ScanView类中的调用
+  
+    @Override
+    public void startScan() {
+        reader.setReadCodeListener(this);
+        super.startScan();
+        reader.prepareRead();//调用底层C++的处理，比如判断灯光，从而设置isDark
+        isStop = false;
+    }
+  // 调用 C++ 层
+  public void prepareRead() {
+        NativeSdk.getInstance().prepareRead(_nativePtr);
+    }
+``` 
+``` C++
+// jni 调用
+  JNIEXPORT void JNICALL
+Java_me_devilsen_czxing_code_NativeSdk_prepareRead(JNIEnv *env, jobject thiz, jlong objPtr) {
+    auto imageScheduler = reinterpret_cast<ImageScheduler *>(objPtr);
+    imageScheduler->prepare();
+}
+
+// JavaCallHelper 中获取 java代码方法 onBrightnessCallback() 
+JavaCallHelper::JavaCallHelper(JavaVM *_javaVM, JNIEnv *_env, jobject &_jobj) : javaVM(_javaVM),
+                                                                                env(_env) {
+    jSdkObject = env->NewGlobalRef(_jobj);
+
+    jclass jSdkClass = env->GetObjectClass(jSdkObject);
+    if (jSdkClass == nullptr) {
+        LOGE("Unable to find class");
+        return;
+    }
+
+    jmid_on_result = env->GetMethodID(jSdkClass, "onDecodeCallback", "(Ljava/lang/String;I[F)V");
+    jmid_on_focus = env->GetMethodID(jSdkClass, "onFocusCallback", "()V");
+    jmid_on_brightness = env->GetMethodID(jSdkClass, "onBrightnessCallback", "(Z)V");// 获取java方法
+
+    if (jmid_on_result == nullptr) {
+        LOGE("jmid_on_result is null");
+    }
+}
+
+// 最后调用到 ImageScheduler中处理亮度 isDark 
+bool ImageScheduler::analysisBrightness(const Mat &gray) {
+    LOGE("start analysisBrightness...");
+
+    // 平均亮度
+    Scalar scalar = mean(gray);
+    cameraLight = scalar.val[0];
+    LOGE("平均亮度 %lf", cameraLight);
+    // 判断在时间范围 AMBIENT_BRIGHTNESS_WAIT_SCAN_TIME * lightSize 内是不是亮度过暗
+    bool isDark = cameraLight < DEFAULT_MIN_LIGHT;
+    javaCallHelper->onBrightness(isDark);// 调用方法
+
+    return isDark;
+}
+ 
+
+ 
